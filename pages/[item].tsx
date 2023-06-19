@@ -1,3 +1,4 @@
+import Product from "@/components/product";
 import { useAppSelector } from "@/store/HOCs";
 import Image from "next/image";
 
@@ -5,11 +6,12 @@ export default function ItemPage() {
     const item = useAppSelector((store) => store.products).find(
         (i) => i.id === 0
     );
+    const products = useAppSelector((store) => store.products);
     if (item)
         return (
             <div
-                className="flex h-screen w-screen flex-row
-            bg-gray-300 p-16 rtl:space-x-reverse"
+                className="flex h-screen w-screen flex-col
+            space-y-5  p-16"
             >
                 <div className="flex h-fit w-full flex-row space-x-5 rounded-xl bg-white p-5 rtl:space-x-reverse">
                     <div className="h-68 flex grow items-center justify-center">
@@ -48,6 +50,48 @@ export default function ItemPage() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div className="flex flex-row space-x-5 rtl:space-x-reverse">
+                    <div className="flex w-1/2 flex-col space-y-5 rounded-xl bg-white p-5">
+                        <label className="rounded-xl bg-red-100 py-2 text-center">
+                            توضیحات
+                        </label>
+                        <label>{item.desc}</label>
+                    </div>
+                    <div
+                        style={{
+                            gridTemplateColumns:
+                                "repeat(auto-fill, minmax(200px, 1fr))",
+                        }}
+                        className="grid w-1/2 grid-cols-5 gap-5"
+                    >
+                        {Object.entries(item.data).map(
+                            ([key, value], index) => (
+                                <div className="flex flex-col items-center justify-center space-y-5 rounded-xl bg-white p-5">
+                                    <label className="text-lg font-bold text-black">
+                                        {value}
+                                    </label>
+                                    <label className="text-gray-500">
+                                        {key}
+                                    </label>
+                                </div>
+                            )
+                        )}
+                    </div>
+                </div>
+                <div className="space-y-5">
+                    <label>از ادامه فروشگاه دیدن کنید ...</label>
+                    <div
+                        style={{
+                            gridTemplateColumns:
+                                "repeat(auto-fill, minmax(200px, 1fr))",
+                        }}
+                        className="grid w-full grid-cols-5 gap-5"
+                    >
+                        {products.map((item, index) => (
+                            <Product key={index} {...item} />
+                        ))}
                     </div>
                 </div>
             </div>
