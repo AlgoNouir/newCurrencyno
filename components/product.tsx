@@ -1,9 +1,14 @@
 import { productType } from "@/store/products/slice";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function Product(props: productType) {
+    const router = useRouter();
     return (
-        <button className="flex flex-col justify-end space-y-5 overflow-hidden rounded-xl bg-white">
+        <button
+            onClick={() => router.push(props.id.toString())}
+            className="flex flex-col justify-end space-y-5 overflow-hidden rounded-xl bg-white"
+        >
             <div className="flex grow flex-col items-center justify-center space-y-5 p-5">
                 <Image src={require("@/public/next.svg")} alt="hello" />
                 <p>{props.name}</p>
